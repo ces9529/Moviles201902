@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Clase 1</title>
+</head>
+
+<body>
+
+    <script type="text/javascript" src="lib/phaser.js"></script>
+
+    <script type="text/javascript">
+        window.onload = function () {
+            var config = {
+                type: Phaser.Auto,
+                width: 360,
+                height: 640,
+                scene: {
+                    preload: preload,
+                    create: create,
+                    update: update
+                }
+            };
+            // console.log("Hola papito");
+            // alert("Suave papi");
+            game = new Phaser.Game(config),
+                selected = "";
+
+            function preload() {
+                // console.log("preload");
+                this.load.image("background", "img/backyard.png");
+                this.load.image("apple", "img/apple.png");
+                this.load.image("candy", "img/candy.png");
+                this.load.image("rotate", "img/rotate.png");
+                this.load.image("duck", "img/rubber_duck.png");
+                this.load.spritesheet("pet", "img/pet.png",
+                    { frameWidth: 98, frameHeight: 85 }
+                );
+            }
+            function create() {
+                var background = this.add.image(0, 0, "background");
+                background.setOrigin(0, 0);
+
+                var apple = this.add.sprite(50, 50, "apple");
+                apple.setOrigin(0, 0);
+                apple.setInteractive();
+                apple.on("pointerdown", function () {
+                    selected = apple.texture.key;
+                });
+
+                var candy = this.add.sprite(110, 110, "candy");
+                candy.setOrigin(0, 0);
+                candy.setInteractive();
+                candy.on("pointerdown", function () {
+                    selected = candy.texture.key;
+                });
+
+
+                var duck = this.add.sprite(50, 400, "duck");
+                duck.setOrigin(0, 0);
+                duck.setInteractive();
+                duck.on("pointerdown", function () {
+                    selected = duck.texture.key;
+                });
+
+                var rotate = this.add.sprite(220, 220, "rotate");
+                rotate.setOrigin(0, 0);
+                rotate.setInteractive();
+                rotate.on("pointerdown", function () {
+                    selected = rotate.texture.key;
+                });
+
+                var pet = this.add.image(100, 300, "pet");
+                pet.setOrigin(0, 0);
+
+                //this.input.on("pointerdown", clickScene);
+                background.setInteractive();
+                background.on("pointerdown", clickScene, this);
+            }
+            // function clickElement(pointer, LocalX, LocalY, object){
+            //     console.log(pointer);
+            //     console.log(object);
+            // }
+
+            function clickScene(event) {
+                if(selected != ""){
+                    var element = this.add.sprite(
+                        event.x, event.y, selected
+                    );
+                    selected = "";
+                }
+            }
+
+            function clone(object) {
+                console.log(this)
+            }
+
+            function update() {
+
+            }
+        }
+    </script>
+</body>
+
+</html>
